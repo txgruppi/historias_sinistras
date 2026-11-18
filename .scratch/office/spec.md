@@ -57,9 +57,9 @@ A mobile-first, one-column page on GitHub Pages. The player picks a pasta from a
 45. As a player, I want the capa to keep "Ler o caso" on the page and to have no three-action bar, so that the only action on a capa is turning it.
 46. As a player, I want every action to be a visible control, so that I do not need Cardputer keys or the digits 1, 2, or 5.
 47. As a player, I want the controls sized for a thumb, so that the phone layout is the one the page is built for.
-48. As a player, I want warm off-white paper, black Special Elite, and a red stamp on a Resolvido pasta, so that the page reads as a file on a desk.
-49. As a player, I want the type large and the line short, so that a verdade is readable in a typewriter face.
-50. As a player, I want no animation and no sound, so that nothing gates the text that is already visible.
+48. As a player, I want warm off-white paper, black Special Elite, and a red stamp on a Resolvido pasta, so that the page reads as a file on a desk. _(Superseded by `.scratch/redesign/spec.md`.)_
+49. As a player, I want the type large and the line short, so that a verdade is readable in a typewriter face. _(Superseded by `.scratch/redesign/spec.md`.)_
+50. As a player, I want no animation and no sound, so that nothing gates the text that is already visible. _(Kept; also in `.scratch/redesign/spec.md`.)_
 51. As a player, I want the page in Brazilian Portuguese, including every control word named in this spec, so that I am not offered an English interface.
 52. As a player, I want progresso to remain in this browser when I leave and come back, so that Em andamento and Resolvido survive a reload.
 53. As a player, I want no account, so that I do not sign in to keep my pastas.
@@ -72,7 +72,7 @@ A mobile-first, one-column page on GitHub Pages. The player picks a pasta from a
 60. As a player, I want Como jogar to explain playing alone, so that I know to form a theory, open a dica only when stuck, open the verdade when I choose, and mark the pasta only if I count it solved.
 61. As a player in a group, I want Como jogar to explain the Guardião do Segredo, so that one person who has read the verdade can answer only sim, não, or irrelevante.
 62. As a player in a group, I want no second mode for the Guardião, so that the office stays the same list and the same pasta.
-63. As a player, I want Créditos to show the required notice `Copyright (c) 2026 Perrart (https://github.com/perrart/cardputer)`, the PolyForm Noncommercial summary, and the license text, so that I can see what I may do with the casos.
+63. As a player, I want Créditos to show the required notice `Copyright (c) 2026 Perrart (https://github.com/perrart/historias_sinistras)`, the PolyForm Noncommercial summary, and the license text, so that I can see what I may do with the casos.
 64. As a player, I want Créditos to include Special Elite's OFL notice, Elm's BSD-3-Clause notice, and the notice for each Elm package the page imports, so that the works I downloaded are named with the notice their license requires.
 65. As a player, I want the casos' words left as written, so that the port does not rewrite a mistério.
 
@@ -86,7 +86,7 @@ A mobile-first, one-column page on GitHub Pages. The player picks a pasta from a
 - "Ler o caso" is the only transition from Novo to Em andamento. Opening the verdade never sets Resolvido. The stamp is only on the cenário page. "Desmarcar" returns the pasta to Em andamento. Zerar progresso returns every pasta to Novo and is a second control on the list, "Confirmar" and "Cancelar", with no timer and no extra route.
 - The cenário paper shows identity, then the cenário, then open dicas in order, then the verdade if it is open. The fixed bar holds only the actions that still apply: "Revelar dica" until four are open, "Revelar a verdade" until it is open, and the stamp always. On a narrow column the bar stacks those controls one per row. On a wide column it uses one row when the words fit. The top of every pasta, and of Como jogar and Créditos, offers "Lista". "Anterior" and "Próximo" exist only on a pasta, and they are absent at ids 1 and 60.
 - The list title is Histórias Sinistras. Under it: Como jogar, Créditos, then one Filtrar control, then the rows, then Zerar progresso. An Em andamento row adds "N dicas" and, when open, "verdade". A filter that matches nothing says so.
-- Visuals are one column at every width, more margin when the window is wide, a short measure, large Special Elite for every string, warm off-white paper, black type, and a red stamp for Resolvido. Special Elite is a file the page serves, with its OFL notice. There is no animation and no sound.
+- Visuals are one column at every width, more margin when the window is wide, a short measure, large Special Elite for every string, warm off-white paper, black type, and a red stamp for Resolvido. Special Elite is a file the page serves, with its OFL notice. There is no animation and no sound. _(Visual palette superseded by `.scratch/redesign/spec.md`; rules unchanged.)_
 - Créditos include the Perrart notice, the PolyForm Noncommercial summary, the license text, the Special Elite notice, the Elm BSD-3-Clause notice (Copyright 2012-present Evan Czaplicki, with the license conditions and disclaimer), and the notice for each Elm package the program imports. Packages that are not imported are not credited.
 - The control words are exactly: "Ler o caso", "Lista", "Anterior", "Próximo", "Revelar dica", "Revelar a verdade", "Marcar como resolvido", "Desmarcar", "Confirmar", "Cancelar", "Filtrar", "Limpar", "Como jogar", "Créditos", and the state words Novo, Em andamento, and Resolvido.
 - Unreadable progresso is treated as every pasta Novo. An id outside 1–60 selects the list. Two tabs share the save and the last write wins.
@@ -102,7 +102,7 @@ A mobile-first, one-column page on GitHub Pages. The player picks a pasta from a
 
 - A Continuar control, a splash, a reler control, and a second mode for the Guardião do Segredo.
 - Cardputer keys, the digits 1, 2, and 5 as shortcuts, brightness, a backlight sleep, sound, volume, text speed, a text-size control, and any animation or glitch.
-- A side-by-side list and pasta, a drawn room, IBM Plex, and the device's black screen.
+- A side-by-side list and pasta, a drawn room, IBM Plex. _(A dark screen is in scope for `.scratch/redesign/spec.md`.)_
 - An English translation.
 - An account, a server, or a save that syncs two tabs.
 - Path URLs that depend on GitHub Pages rewriting every route to the shell. The address stays a hash.

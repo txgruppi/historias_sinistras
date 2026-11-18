@@ -20,6 +20,7 @@ module Office exposing
     , filtroVazio
     , visitaVazia
     , semCorrespondencia
+    , avisoZerarTexto
     , update
     , view
     )
@@ -146,14 +147,21 @@ type alias OfficeSaida =
 
 type alias ListaPage =
     { tituloPagina : String
+    , resolvidos : Int
     , atalhos : List String
     , controles : List String
     , filtroAtivo : List String
     , painelFiltrar : Maybe PainelFiltrarOpcoes
     , avisoSemCorrespondencia : Maybe String
     , linhas : List LinhaLista
+    , avisoZerar : Maybe String
     , controlesAposLinhas : List String
     }
+
+
+avisoZerarTexto : String
+avisoZerarTexto =
+    "Todos os casos voltarão a ficar sem solução e as dicas reveladas serão esquecidas. Esta ação não pode ser desfeita."
 
 
 type alias CapaPage =
@@ -357,6 +365,12 @@ estadoDeTexto texto =
             Nothing
 
 
+contarResolvidos : List Caso -> Progresso -> Int
+contarResolvidos casos progresso =
+    List.length <|
+        List.filter (\caso -> estadoDe progresso caso.id == Resolvido) casos
+
+
 casoAtendeFiltro : Filtro -> Progresso -> Caso -> Bool
 casoAtendeFiltro filtro progresso caso =
   let
@@ -438,14 +452,23 @@ viewLista casos progresso filtro visita =
 
             else
                 [ "Zerar progresso" ]
+
+        avisoZerar =
+            if visita.confirmarZerar then
+                Just avisoZerarTexto
+
+            else
+                Nothing
     in
     { tituloPagina = "Histórias Sinistras"
+    , resolvidos = contarResolvidos casos progresso
     , atalhos = [ "Como jogar", "Créditos" ]
     , controles = controles
     , filtroAtivo = filtroAtivoRotulos filtro
     , painelFiltrar = painel
     , avisoSemCorrespondencia = aviso
     , linhas = linhas
+    , avisoZerar = avisoZerar
     , controlesAposLinhas = aposLinhas
     }
 
@@ -485,7 +508,7 @@ detalhesEmAndamento pasta =
 
 comoJogarParagrafos : List String
 comoJogarParagrafos =
-    [ "Histórias Sinistras é um jogo de mistério em português. Em cada pasta você lê o cenário, monta uma teoria sobre o que aconteceu e tenta explicar o estranho caso."
+    [ "Histórias Sinistras é um jogo de mistério. Em cada pasta você lê o cenário, monta uma teoria sobre o que aconteceu e tenta explicar o estranho caso."
     , "Abra uma dica só quando estiver travado. As dicas seguem em ordem e ficam visíveis depois de abertas."
     , "Revelar a verdade é sua escolha. A verdade explica o caso de fato; abri-la não marca a pasta como resolvida."
     , "Use Marcar como resolvido no cenário somente se você conta a pasta como resolvida. Desmarcar volta o estado para Em andamento."

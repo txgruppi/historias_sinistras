@@ -1,0 +1,48 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Elm
+        run: |
+          curl -fsSL -o elm.gz https://github.com/elm/compiler/releases/download/0.19.3/elm-0.19.3-linux-x64.gz
+          gunzip -c elm.gz > elm
+          chmod +x elm
+          sudo mv elm /usr/local/bin/
+
+      - uses: extractions/setup-just@v2
+
+      - name: Run tests
+        run: npx --yes elm-test@0.19.1-revision16
+
+      - name: Build site
+        run: just build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

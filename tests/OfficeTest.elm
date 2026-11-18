@@ -1408,7 +1408,7 @@ suite =
                                 [ \_ ->
                                     Expect.equal
                                         (String.contains
-                                            "Copyright (c) 2026 Perrart (https://github.com/perrart/cardputer)"
+                                            "Required Notice: Copyright (c) 2026 Perrart (https://github.com/perrart/historias_sinistras)"
                                             texto
                                         )
                                         True
@@ -1484,5 +1484,85 @@ suite =
                                 (Just "Assassinatos")
                         ]
                         ()
+            ]
+        , describe "redesign lista"
+            [ test "resolvidos conta todas as pastas Resolvido e ignora o filtro" <|
+                \_ ->
+                    let
+                        progresso =
+                            Dict.fromList
+                                [ ( 1, { estado = Resolvido, dicas = 0, verdade = False } )
+                                , ( 2, { estado = Resolvido, dicas = 4, verdade = True } )
+                                , ( 3, { estado = EmAndamento, dicas = 1, verdade = False } )
+                                ]
+
+                        filtroResolvido =
+                            { filtroVazio | estado = Just Resolvido }
+
+                        visFiltrada =
+                            Office.view casos60 progresso filtroResolvido visitaVazia Lista
+
+                        visLista =
+                            Office.view casos60 progresso filtroVazio visitaVazia Lista
+                    in
+                    case ( visLista, visFiltrada ) of
+                        ( VisLista page, VisLista pageF ) ->
+                            Expect.all
+                                [ \_ -> Expect.equal page.resolvidos 2
+                                , \_ -> Expect.equal pageF.resolvidos 2
+                                ]
+                                ()
+
+                        _ ->
+                            Expect.fail "esperava lista"
+            , test "resolvidos cai a zero após Confirmar no zerar" <|
+                \_ ->
+                    let
+                        progresso =
+                            Dict.singleton 1
+                                { estado = Resolvido, dicas = 0, verdade = False }
+
+                        ( _, saidaZerar ) =
+                            Office.update casos60 progresso filtroVazio visitaVazia Lista
+                                ZerarProgresso
+
+                        ( prog, saidaConfirmar ) =
+                            Office.update casos60 progresso saidaZerar.filtro
+                                saidaZerar.visita Lista Confirmar
+                    in
+                    case saidaConfirmar.visible of
+                        VisLista page ->
+                            Expect.all
+                                [ \_ -> Expect.equal Dict.empty prog
+                                , \_ -> Expect.equal page.resolvidos 0
+                                ]
+                                ()
+
+                        _ ->
+                            Expect.fail "esperava lista"
+            , test "avisoZerar só enquanto a confirmação está aberta" <|
+                \_ ->
+                    case Office.view casos60 Dict.empty filtroVazio visitaVazia Lista of
+                        VisLista semConfirmar ->
+                            let
+                                ( _, saidaZerar ) =
+                                    Office.update casos60 Dict.empty filtroVazio visitaVazia Lista
+                                        ZerarProgresso
+                            in
+                            case saidaZerar.visible of
+                                VisLista confirmando ->
+                                    Expect.all
+                                        [ \_ -> Expect.equal semConfirmar.avisoZerar Nothing
+                                        , \_ ->
+                                            Expect.equal confirmando.avisoZerar
+                                                (Just avisoZerarTexto)
+                                        ]
+                                        ()
+
+                                _ ->
+                                    Expect.fail "esperava lista"
+
+                        _ ->
+                            Expect.fail "esperava lista"
             ]
         ]

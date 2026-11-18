@@ -22,7 +22,7 @@ _Avoid_: aberto, fechado, lacrado
 
 **Em andamento**:
 A pasta whose cenário has been shown and that the player has not marked resolvido. Opening it shows the cenário.
-_Avoid_: aberto, iniciado
+_Avoid_: aberto, iniciado, investigação
 
 **Cenário**:
 The text the player reads first. It states what is strange and ends in the question they have to answer.

@@ -2,7 +2,7 @@ module Licencas exposing (blocosCreditos, perrartNotice, polyformSummary)
 
 perrartNotice : String
 perrartNotice =
-    "Copyright (c) 2026 Perrart (https://github.com/perrart/cardputer)"
+    "Required Notice: Copyright (c) 2026 Perrart (https://github.com/perrart/historias_sinistras)"
 
 polyformSummary : String
 polyformSummary =
